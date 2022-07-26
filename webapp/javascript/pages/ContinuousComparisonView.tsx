@@ -24,7 +24,11 @@ import useColorMode from '@webapp/hooks/colorMode.hook';
 import { isExportToFlamegraphDotComEnabled } from '@webapp/util/features';
 import styles from './ContinuousComparison.module.css';
 import useTags from '../hooks/tags.hook';
-import useTimelines, { leftColor, rightColor } from '../hooks/timeline.hook';
+import useTimelines, {
+  leftColor,
+  rightColor,
+  selectionColor,
+} from '../hooks/timeline.hook';
 import usePopulateLeftRightQuery from '../hooks/populateLeftRightQuery.hook';
 import useFlamegraphSharedQuery from '../hooks/flamegraphSharedQuery.hook';
 
@@ -104,6 +108,7 @@ function ComparisonApp() {
                 titleKey={isSidesHasSameUnits ? leftSide.metadata.units : ''}
               />
             }
+            selectionType="double"
           />
         </Box>
         <div
@@ -150,8 +155,13 @@ function ComparisonApp() {
                 data-testid="timeline-left"
                 timelineA={leftTimeline}
                 markings={{
-                  left: { from: leftFrom, to: leftUntil, color: leftColor },
+                  left: {
+                    from: leftFrom,
+                    to: leftUntil,
+                    color: selectionColor,
+                  },
                 }}
+                selectionType="single"
                 onSelect={(from, until) => {
                   dispatch(actions.setLeft({ from, until }));
                 }}
@@ -200,8 +210,13 @@ function ComparisonApp() {
                 data-testid="timeline-right"
                 timelineA={rightTimeline}
                 markings={{
-                  right: { from: rightFrom, to: rightUntil, color: rightColor },
+                  right: {
+                    from: rightFrom,
+                    to: rightUntil,
+                    color: selectionColor,
+                  },
                 }}
+                selectionType="single"
                 onSelect={(from, until) => {
                   dispatch(actions.setRight({ from, until }));
                 }}

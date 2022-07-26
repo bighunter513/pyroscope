@@ -13,6 +13,7 @@ import usePopulateLeftRightQuery from '@webapp/hooks/populateLeftRightQuery.hook
 import useTimelines, {
   leftColor,
   rightColor,
+  selectionColor,
 } from '@webapp/hooks/timeline.hook';
 import useTimeZone from '@webapp/hooks/timeZone.hook';
 import useColorMode from '@webapp/hooks/colorMode.hook';
@@ -114,6 +115,7 @@ function ComparisonDiffApp() {
               left: { from: leftFrom, to: leftUntil, color: leftColor },
               right: { from: rightFrom, to: rightUntil, color: rightColor },
             }}
+            selectionType="double"
             timezone={timezone}
             title={
               <TimelineTitle titleKey={diffView.profile?.metadata.units} />
@@ -143,8 +145,13 @@ function ComparisonDiffApp() {
                 dispatch(actions.setLeft({ from, until }));
               }}
               markings={{
-                left: { from: leftFrom, to: leftUntil, color: leftColor },
+                left: {
+                  from: leftFrom,
+                  to: leftUntil,
+                  color: selectionColor,
+                },
               }}
+              selectionType="single"
               timezone={timezone}
             />
           </Box>
@@ -170,8 +177,13 @@ function ComparisonDiffApp() {
                 dispatch(actions.setRight({ from, until }));
               }}
               markings={{
-                right: { from: rightFrom, to: rightUntil, color: rightColor },
+                right: {
+                  from: rightFrom,
+                  to: rightUntil,
+                  color: selectionColor,
+                },
               }}
+              selectionType="single"
               timezone={timezone}
             />
           </Box>
